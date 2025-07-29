@@ -117,4 +117,10 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  margin:0;
+}
+.historial p {
+  margin: 0;
+  padding: 8px;
 }

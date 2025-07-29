@@ -143,6 +143,7 @@ input.addEventListener("input", handleHideError);
 
 function handleHideError() {
     errorimporte.style.display = "none";
+    resultado.style.display ="none";
 }
 
 
