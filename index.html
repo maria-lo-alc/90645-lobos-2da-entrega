@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conversor de Monedas</title>
+  <link rel="stylesheet" href="estilos.css"/>
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Conversor de monedas</h1>
+    
+    <div class="campo">
+      <label for="importe">Importe</label>
+      <input type="number" id="importe" placeholder="Ej: 200000" />
+    </div>
+    <div class="error" id="error">
+      <p>Ingrese monto valido</p>
+    </div>
+    
+    <div class="seleccion">
+      <div>
+        <label for="desde">Desde</label>
+        <select id="desde">
+          <option value="ARS">ARS</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+      <div>
+        <label for="a">A</label>
+        <select id="a">
+          <option value="USD">USD</option>
+          <option value="ARS">ARS</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="convertir">Convertir</button>
+  
+  <div class="contenedorResultado" id="contenedorResultado">
+ <p id="resultado"></p>
+  </div>
+  <div class="historialTituloyBoton" id="historialTituloyBoton"> <h2 id="tituloHistorial">Historial de conversiones</h2>
+  <div> <img class= "eliminar" id="eliminar" src="./assets/eliminar.png" alt="Eliminar historial" /> </div>
+  </div>
+  
+  <div class = "historial" id="historial">
+  </div>
+   <script src="main.js"></script>
+   </div>
+</body>
+</html>
