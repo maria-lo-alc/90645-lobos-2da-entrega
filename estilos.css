@@ -98,7 +98,16 @@ button:hover {
   color: red;
   font-size: 16px;
   font-weight: 700;
+  
 }
+
+
+.errorMoneda {
+  display: none;
+  color: red;
+  font-size: 16px;
+  font-weight: 700;
+  }
 #resultado {
   display: none;
   background-color: #bbed2c;
