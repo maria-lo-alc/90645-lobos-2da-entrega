@@ -1,25 +1,4 @@
-const valor1USD = {
-  ARS: 1257.24,
-  EUR: 0.852,
-  GBP: 0.74,
-};
-const valor1EUR = {
-  ARS: 1474.07,
-  USD: 1.172,
-  GBP: 0.86,
-};
-const valor1ARS = {
-  USD: 0.0007953,
-  EUR: 0.000678394,
-  GBP: 0.00056,
-};
-
-const valor1GBP = {
-  ARS: 1782.66,
-  USD: 1.36,
-  EUR: 1782.66
-}
-
+let tasasDeCambio = {};
 let historial = [];
 const resultadoParrafo = document.querySelector("#resultado");
 const input = document.querySelector("#importe");
@@ -41,25 +20,54 @@ function validarImporte(importe) {
   }
   return true;
 }
+async function obtenerTasasDeCambio() {
+  try {
+    const respuesta = await fetch("tasas.json");
+    if (!respuesta.ok) {
+      throw new Error("No se pudo cargar el archivo de tasas.");
+    }
+    const datos = await respuesta.json();
+    tasasDeCambio = datos.tasasDeCambio;
+  } catch (error) {
+    Swal.fire({
+  icon: "error",
+  title: "No pudimos cargar las tasas de cambio. ",
+  text: "Vuleve a intentarlo más tarde.",
+});
+  }
+}
+
+async function convertir() {
+  const importe = obtenerImporte();
+  const desde = document.querySelector("#desde").value;
+  const a = document.querySelector("#a").value;
+
+  if (a === desde) {
+    Swal.fire("Debes elegir dos monedas diferentes");
+    return;
+  }
+
+  if (!validarImporte(importe)) {
+    return;
+  }
+
+   if (Object.keys(tasasDeCambio).length === 0) {
+        await obtenerTasasDeCambio();
+        if (Object.keys(tasasDeCambio).length === 0) {
+            return;
+        }
+  }
+
+  const resultado = calcularResultado(importe, desde, a);
+  actualizarUI(importe, desde, a, resultado);
+}
+
 
 function calcularResultado(importe, desde, a) {
-  let resultado;
-
-  switch (desde) {
-    case "ARS":
-      resultado = importe * valor1ARS[a];
-      break;
-    case "USD":
-      resultado = importe * valor1USD[a];
-      break;
-    case "EUR":
-      resultado = importe * valor1EUR[a];
-      break;
-      case "GBP":
-      resultado = importe * valor1GBP[a];
-      break;
+  const tasa = tasasDeCambio[desde][a];
+  if (tasa) {
+    return importe * tasa;
   }
-  return resultado;
 }
 
 function mostrarResultado(resultado, importe, desde, a) {
@@ -80,18 +88,7 @@ function actualizarUI(importe, desde, a, resultado) {
   limpiarInput();
 }
 
-function convertir() {
-  const importe = obtenerImporte();
-  const desde = document.querySelector("#desde").value;
-  const a = document.querySelector("#a").value;
 
-  if (!validarImporte(importe)) {
-    return;
-  }
-
-  const resultado = calcularResultado(importe, desde, a);
-  actualizarUI(importe, desde, a, resultado);
-}
 
 button.addEventListener("click", convertir);
 
@@ -118,11 +115,12 @@ function mostrarHistorial() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  obtenerTasasDeCambio();
   const historialGuardado = localStorage.getItem("historial");
 
   if (historialGuardado) {
     historial = JSON.parse(historialGuardado);
-    mostrarHistorial(); // 👈 Llamas a la nueva función aquí también
+    mostrarHistorial(); 
   }
 });
 

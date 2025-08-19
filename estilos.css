@@ -3,9 +3,8 @@ body {
   background-color: #f5f6fa;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; ;
   height: 100vh;
-  margin: 0;
 }
 
 .contenedor {
@@ -14,6 +13,12 @@ body {
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 320px;
+  display: flex; 
+  flex-direction: column;
+  overflow: hidden; 
+  padding: 20px;
+  height: auto;
+  margin-top:20px;
 }
 
 h1 {
@@ -108,6 +113,9 @@ button:hover {
   font-size: 16px;
   font-weight: 700;
   }
+#contenedorResultado {
+  min-height: 3.125rem;
+}
 #resultado {
   display: none;
   background-color: #bbed2c;
@@ -128,8 +136,21 @@ button:hover {
   align-items: center;
   box-sizing: border-box;
   margin:0;
+  padding: 0;
 }
 .historial p {
   margin: 0;
   padding: 8px;
+}
+
+.historial {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+#historial.historial {
+  margin: 0;
+  padding: 0;
 }
